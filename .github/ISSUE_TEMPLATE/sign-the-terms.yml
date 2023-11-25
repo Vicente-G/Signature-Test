@@ -1,0 +1,24 @@
+name: 'Signing for our Agreement'
+description: 'Sign the agreement to queue your application for review by the team.'
+body:
+  - type: markdown
+    attributes:
+      value: Thank you for your interest in joining our team! We are excited to review your application. Please read and sign the agreement provided in this [cool link](https://cool.lnk)!
+  - type: checkboxes
+    id: agreement
+    attributes:
+      label: I agree to the terms and conditions
+      description: |
+        Please read the agreement carefully before signing.
+      options:
+        - label: I agree
+          required: true
+  - type: input
+    id: username
+    attributes:
+      label: Provide your GitHub username
+      description: |
+        This is the username you use to login to GitHub.
+      placeholder: Username
+    validations:
+      required: true

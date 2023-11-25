@@ -1,0 +1,27 @@
+name: Start new repo
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+
+jobs:
+  add-signature:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Check issue's event object
+        run: |
+            echo ${{ toJson(github) }}
+            
+            #for file in $SETUP_DIR/*; do
+            #sed -i 's/$OWNER/'"$OWNER"'/g' $file
+            #done
+            #git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            #git config --global user.name "github-actions[bot]"
+            #git add .
+            #git commit --amend --no-edit
+            #git push -f origin main
