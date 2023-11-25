@@ -3,22 +3,16 @@ description: 'Sign the agreement to queue your application for review by the tea
 body:
   - type: markdown
     attributes:
-      value: Thank you for your interest in joining our team! We are excited to review your application. Please read and sign the agreement provided in this [cool link](https://cool.lnk)!
+      value: Thank you for your interest in joining our team! We are excited to review your application. Please read the agreement provided in this [cool link](https://cool.lnk), in there you'll find our terms and conditions to join the team!
+      
+  - type: markdown
+    attributes:
+      value: To complete your application, please check the box below, and write your full name in the title of this form. Take in count that what you type in will be displayed publicly in this repo along your GitHub's username.
+      
   - type: checkboxes
     id: agreement
     attributes:
-      label: I agree to the terms and conditions
-      description: |
-        Please read the agreement carefully before signing.
+      label: Confirmation
       options:
-        - label: I agree
+        - label: I have read and agreed the terms and conditions.
           required: true
-  - type: input
-    id: username
-    attributes:
-      label: Provide your GitHub username
-      description: |
-        This is the username you use to login to GitHub.
-      placeholder: Username
-    validations:
-      required: true

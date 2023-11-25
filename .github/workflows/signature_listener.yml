@@ -1,11 +1,16 @@
-name: Start new repo
+name: Create signature
+
+concurrency:
+  group: one-at-a-time
+  cancel-in-progress: false
 
 on:
   issues:
     types: [opened]
-
+    
 permissions:
   contents: write
+  issues: write
 
 jobs:
   add-signature:
@@ -13,15 +18,23 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Check issue's event object
+      - name: Add the signment of user
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NUMBER: ${{ github.event.issue.number }}
+          USER: ${{ github.event.issue.user.login }}
+          NAME: ${{ github.event.issue.title }}
+          ID: ${{ github.event.issue.user.id }}
         run: |
-            echo ${{ toJson(github) }}
-            
-            #for file in $SETUP_DIR/*; do
-            #sed -i 's/$OWNER/'"$OWNER"'/g' $file
-            #done
-            #git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            #git config --global user.name "github-actions[bot]"
-            #git add .
-            #git commit --amend --no-edit
-            #git push -f origin main
+          if grep -q "\[$USER\]" ./README.md; then
+          gh issue close --comment "User already signed, closing the issue." "$NUMBER"
+          else
+          sed -i 's@### Made by me!@'"| $NAME | [$USER](https://github.com/$USER) |"'@' ./README.md
+          echo "### Made by me!" >> ./README.md
+          git config --global user.email "$ID+$USER@users.noreply.github.com"
+          git config --global user.name "$USER"
+          git add .
+          git commit -m "Agreement signed by $USER on issue #$NUMBER"
+          git push origin main
+          gh issue close --comment "Signature received, closing the issue." "$NUMBER"
+          fi
